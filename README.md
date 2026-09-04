@@ -5,6 +5,12 @@ as input, e.g. 'Europe/Zurich'.
 
 A full list of supported time zones is available at: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
+Requires Node.js 18 or newer. Time zone data is bundled with the `moment-timezone`
+dependency rather than read from the operating system, so pick up future DST rule
+changes with `npm update moment-timezone`.
+
+An unknown time zone returns HTTP 400 with the body `Unknown timezone`.
+
 
 
 #API:
@@ -74,7 +80,7 @@ Push the service
 
 # Running on a Raspberry Pi
 
-The best node version to run with on the Raspberry is v6. This guide takes you through the process of installing node on the Rapsberry and running the server with that.
+Use a current Node.js LTS release (18 or newer). This guide takes you through the process of installing node on the Rapsberry and running the server with that.
 
 Create a directory into which you want to install Node.js. I'll do this as a subdirectory of my $HOME directory:
 
@@ -93,20 +99,22 @@ I get back:
     pi@raspberrypi:~ $ uname -m
     armv6l
 
-This means I have to use the armv6l version of Node.js. Substitute this "<arm-arch>" into the node version in "https://nodejs.org/dist/v6.17.1/node-v6.17.1-linux-<arm-arch>.tar.gz". In my case this turns into:
+This means I have to use the armv7l version of Node.js. Substitute your "<arm-arch>" into the node version in "https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-<arm-arch>.tar.gz". In my case this turns into:
 
-    wget https://nodejs.org/dist/v6.17.1/node-v6.17.1-linux-armv6l.tar.gz
+    wget https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-armv7l.tar.gz
 
+Note that Node.js dropped armv6l builds after v11, so the very oldest Pi models
+need an alternative build.
 
 Now unpack it and change into the installed directory:
 
-    tar xvfz node-v6.17.1-linux-armv6l.tar.gz
-    cd nodev6/
+    tar xvfz node-v22.11.0-linux-armv7l.tar.gz
+    cd node-v22.11.0-linux-armv7l/
 
 Install the files into /usr/local/bin by linking them
 
-    sudo ln -s /home/pi/nodev6/node-v6.17.1-linux-armv6l/bin/node /usr/local/bin/node
-    sudo ln -s /home/pi/nodev6/node-v6.17.1-linux-armv6l/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+    sudo ln -s /home/pi/node/node-v22.11.0-linux-armv7l/bin/node /usr/local/bin/node
+    sudo ln -s /home/pi/node/node-v22.11.0-linux-armv7l/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 Test the installation by checking the versions of the files installed onto the path:
 

@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+*.log
+.git
+.gitignore
+.idea
+nbproject
+Dockerfile
+.dockerignore
+push.sh
+run.sh
