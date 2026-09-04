@@ -1,0 +1,20 @@
+services:
+  time-zone-server:
+    build: .
+    image: time-zone-server:latest
+    container_name: time-zone-server
+    # Comes back up when the Docker daemon starts at boot, but stays down if you
+    # deliberately stopped it beforehand.
+    restart: unless-stopped
+    # tini as PID 1: forwards signals and reaps zombies.
+    init: true
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/getTimeZone/Europe/Zurich"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s

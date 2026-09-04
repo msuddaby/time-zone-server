@@ -21,4 +21,7 @@ USER node
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+# Exec node directly rather than via npm, so node is the process that receives
+# SIGTERM. With "npm start" as PID 1 the signal is swallowed and the container
+# exits 1 on a normal stop, which looks like a crash to restart policies.
+CMD [ "node", "time-zone-service.js" ]
